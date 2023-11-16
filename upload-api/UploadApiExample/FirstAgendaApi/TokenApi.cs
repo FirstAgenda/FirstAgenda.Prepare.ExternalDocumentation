@@ -1,14 +1,12 @@
 ﻿using System.Net.Http.Json;
-using UploadApi.Models.OAuth;
+using UploadApiExample.Models.OAuth;
 
-namespace UploadApi.FirstAgendaApiMethods;
+namespace UploadApiExample.FirstAgendaApi;
 
 public class TokenApi
 {
-    public async Task<OAuth2GrantResponseModel?> FetchToken(string clientId, string clientSecret, string grantType)
+    public async Task<OAuth2GrantResponseModel?> FetchToken(string? tokenEndpointUrl, string clientId, string clientSecret, string grantType)
     {
-        const string tokenEndpointUrl = "https://auth.firstagenda.com/connect/token";
-
         var grantRequest = new OAuth2GrantRequestModel(clientId, clientSecret, grantType);
         using var httpClient = new HttpClient();
 
@@ -23,29 +21,8 @@ public class TokenApi
             return null;
         }
 
+        Console.WriteLine($"Found token '{response.AccessToken}' to use");
+
         return response;
-    }
-
-    public bool TokenIsInvalid(OAuth2GrantResponseModel token)
-    {
-        var epochTime = long.Parse(token.ExpiresOn.Substring(0, 10));
-        //Irish time is because the token uses .now on an AWS server that is hosted in Ireland
-        var tokenExpirationTimeIrishTime = DateTimeOffset.FromUnixTimeSeconds(epochTime);
-        var irishTimeZone = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-        var irishTime = TimeZoneInfo.ConvertTime(DateTimeOffset.Now, irishTimeZone);
-
-        return IsTokenExpired(tokenExpirationTimeIrishTime, irishTime);
-    }
-
-    private static bool IsTokenExpired(DateTimeOffset expirationTime, DateTimeOffset currentTime)
-    {
-        if (expirationTime < currentTime)
-        {
-            return true;
-        }
-
-        {
-            return false;
-        }
     }
 }

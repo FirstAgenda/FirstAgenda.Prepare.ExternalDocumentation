@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
-namespace UploadApi.Models.OAuth;
+namespace UploadApiExample.Models.OAuth;
 
-public class OAuth2GrantResponseModel(string accessToken, string expiresIn, string expiresOn)
+public class OAuth2GrantResponseModel(string? accessToken, int expiresIn, int expiresOn)
 {
-    [JsonProperty(PropertyName = "access_token")]
-    public string AccessToken { get; set; } = accessToken;
+    [JsonPropertyName("access_token")] public string? AccessToken { get; set; } = accessToken;
 
-    [JsonProperty(PropertyName = "expires_in")]
-    public string ExpiresIn { get; set; } = expiresIn;
+    [JsonPropertyName("expires_in")] public int ExpiresIn { get; set; } = expiresIn;
 
-    [JsonProperty(PropertyName = "expires_on")]
-    public string ExpiresOn { get; set; } = expiresOn;
+    [JsonPropertyName("expires_on")] public int ExpiresOn { get; set; } = expiresOn;
 }

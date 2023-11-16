@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
-namespace UploadApi.Models.OAuth;
+namespace UploadApiExample.Models.OAuth;
 
 public class OAuth2GrantRequestModel(string clientId, string clientSecret, string grantType)
 {
-    [JsonProperty(PropertyName = "client_id")]
-    public string ClientId { get; set; } = clientId;
+    [JsonPropertyName("client_id")] public string ClientId { get; set; } = clientId;
 
-    [JsonProperty(PropertyName = "client_secret")]
-    public string ClientSecret { get; set; } = clientSecret;
+    [JsonPropertyName("client_secret")] public string ClientSecret { get; set; } = clientSecret;
 
-    [JsonProperty(PropertyName = "grant_type")]
-    public string GrantType { get; set; } = grantType;
+    [JsonPropertyName("grant_type")] public string GrantType { get; set; } = grantType;
 }
