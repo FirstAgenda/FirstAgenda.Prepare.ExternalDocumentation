@@ -1,2 +1,3 @@
 # FirstAgenda.Prepare.ExternalDocumentation
-Documentation that can be sent to customers
+
+Various documentation and examples regarding FirstAgenda Prepare
